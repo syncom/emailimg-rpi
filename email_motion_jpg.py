@@ -31,13 +31,14 @@ smtp_server = ''
 smtp_port = ''
 username = ''
 password = ''
-from_address = username
-to_address = username
 config_file = os.path.dirname(os.path.realpath(__file__)) + '/.config'
 
 def send_email_with_image(img_filepath, subject):
+    [smtp_server, smtp_port, username, password] = get_config_info()
+    from_address = username
+    to_address = username
     image_data = open(img_filepath, 'rb').read()
-    msg = IMEMultipart()
+    msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = from_address
     msg['To'] = to_address
@@ -80,7 +81,6 @@ def get_mtime_str(file):
 def do_email(img_filepath):
     '''Email, image modification time as subject and image as attachment
     '''
-    [smtp_server, smtp_port, username, password] = get_config_info()
     subject = get_mtime_str(img_filepath)
     if not subject:
         print "Something has gone wrong. No email was sent."
