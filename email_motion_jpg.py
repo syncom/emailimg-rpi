@@ -95,7 +95,7 @@ def do_email(img_filepath):
 # - threshold: how much a pixel has to change by to be marked as "changed"
 # - sensitivity: how many changed pixels before capturing an image
 threshold = 10
-sensitivity = 200
+sensitivity = 729
 test_width = 100
 test_height = 75
 
@@ -193,8 +193,9 @@ def do_email_motion(dirname):
                 try:
                     do_email(fpath)
                 except Exception, e:
-                    print "Exception: " + e
-                    time.sleep(900) # Wait 15 minutes
+                    print "Email might not have been sent. Encountered exception, as follows: "
+                    print e
+                    time.sleep(300) # Wait 5 minutes
        
         # Swap comparison buffers
         image1 = image2
