@@ -56,7 +56,7 @@ Usage:
 
     ```
     # take still picture every 10 minutes, and email
-    * * * * * /home/pi/bin/emailimg-rpi/camera_raspistill.sh 2>&1
+    */10 * * * * /home/pi/bin/emailimg-rpi/email_raspistill.sh 2>&1
     ```
 4. Do whatever you like with the emailed images.
 
