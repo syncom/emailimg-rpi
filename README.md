@@ -8,7 +8,7 @@ A simple tool turns a Raspberry Pi (RPi) into a security monitoring system, usin
 - An email account (a free one can be obtained from live.com)
 
 
-## Tweet a JPEG image upon motion detection
+## Email a JPEG image upon motion detection
 
 Usage:
 
@@ -36,6 +36,29 @@ Usage:
     ```
     disable_camera_led=1
     ```
+## Email a JPEG image every 10 minutes (for time-lapse photography)
+
+Usage:
+1. Follow steps 1-3 as in the above section
+
+2. Because we are going to write and delete a lot of files, in order to prevent the SD card worn out, create a ramdisk (of size 25M bytes) to store image files created during the process.
+    ```
+    mkdir /mnt/ramdisk_still
+    mount -t tmpfs -o size=25m tmpfs /mnt/ramdisk_still
+    ```
+   To make the ramdisk persist over reboots, add the following lines to `/etc/fstab`:
+
+    ```
+    # ramdisk for camera capture (added 20160306)
+    tmpfs       /mnt/ramdisk_still tmpfs   nodev,nosuid,noexec,nodiratime,size=25m   0 0
+    ``` 
+3. Create a cron job to take a still picture from the RPi camera module every 10 minute. Do `crontab -e` and add the following:
+
+    ```
+    # take still picture every 10 minutes, and email
+    * * * * * /home/pi/bin/emailimg-rpi/camera_raspistill.sh 2>&1
+    ```
+4. Do whatever you like with the emailed images.
 
 ## Some SMTP server settings
 
