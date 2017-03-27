@@ -14,7 +14,7 @@ Usage:
 
 1. Install the camera module on the RPi, and enable camera module from `rspi-config` menu.
 
-2. Obtain an email account that supports SMTP (e.g., from outlook.com). 
+2. Obtain an email account that supports SMTP (e.g., from outlook.com or sina.com). 
 
 3. Override the corresponding strings in `.config` with the respective values, for the SMTP server name & port, email username (address), and email password.
 
@@ -36,3 +36,17 @@ Usage:
     ```
     disable_camera_led=1
     ```
+
+## Some SMTP server settings
+
+* outlook.com
+  - Server: smtp-mail.outlook.com
+  - Port: 587
+  - Note: Outlook.com is quite annoying, in that it asks for human
+    "verification" over and over again after a few emails are sent through
+    smtplib. I would avoid outlook.com email for this application.
+
+* sina.com
+  - Server: smtp.sina.com
+  - Port: 25
+
