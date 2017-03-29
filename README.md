@@ -83,7 +83,8 @@ Usage:
 5. Use Imagemagick to convert images of interest (in directories `original`, `grayscale`, `normalized`, respectively) to a MPEG video, adding 0.1 second delay between frames.
    ```
    (Change into appropriate directory)
-   convert -delay 10 *.jpg video.mpeg
+   list=$(find `pwd` -name '*.jpg' | sort)
+   convert -delay 10 "${list}" video.mpeg
    ```
    Turn MPEG to MP4 using ffmpeg.
    ```
