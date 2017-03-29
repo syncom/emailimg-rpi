@@ -58,7 +58,39 @@ Usage:
     # take still picture every 10 minutes, and email
     */10 * * * * /home/pi/bin/emailimg-rpi/email_raspistill.sh 2>&1
     ```
-4. Do whatever you like with the emailed images.
+4. Do whatever you like with the emailed images. See the next section for time-lapse photography.
+
+## How to make a time-lapse video from still images using Imagemagick and FFMPEG
+
+1. Put all .jpg images to a directory, say `original`. Change to this directory.
+
+2. Before converting to video, remove image meta info (to reduce the size of the final artifect):
+   ```
+   list=$(find `pwd` -name '*.jpg' | sort)
+   mogrify -strip "${list}"
+   ```
+3. (Optional) Turn images into grayscale, if a black-and-white video is preferred. Save grayscale images to a separate directory, say `grayscale`.
+   ```
+   for i in "${list}"; do convert -type Grayscale "${i}" grayscale/"${i}"; done
+   ```
+
+4. (Optional) Normalize the histogram of the images (original or grayscale) using [histmatch](http://www.fmwconcepts.com/imagemagick/histmatch/index.php). Change into the directory of interest (`orignal` or `grayscale`), put the `histmatch` script there, and then do the following.
+   ```
+   for i in "${list}"; do ./histmatch -c gray ref.jpg "${i}" normalized/"${i}"; done
+   ```
+   Here, `ref.jpg` is a reference image for histogram normalization. It is usually picked from `${list}.
+
+5. Use Imagemagick to convert images of interest (in directories `original`, `grayscale`, `normalized`, respectively) to a MPEG video, adding 0.1 second delay between frames.
+   ```
+   (Change into appropriate directory)
+   convert -delay 10 *.jpg video.mpeg
+   ```
+   Turn MPEG to MP4 using ffmpeg.
+   ```
+   ffmpeg -i video.mpeg video.mp4
+   ```
+
+   The final product is `video.mp4`. Enjoy!
 
 ## Some SMTP server settings
 
