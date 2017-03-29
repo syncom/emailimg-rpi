@@ -67,16 +67,16 @@ Usage:
 2. Before converting to video, remove image meta info (to reduce the size of the final artifect):
    ```
    list=$(find `pwd` -name '*.jpg' | sort)
-   mogrify -strip "${list}"
+   mogrify -strip ${list}
    ```
 3. (Optional) Turn images into grayscale, if a black-and-white video is preferred. Save grayscale images to a separate directory, say `grayscale`.
    ```
-   for i in "${list}"; do convert -type Grayscale "${i}" grayscale/"${i}"; done
+   for i in ${list}; do convert -type Grayscale "${i}" grayscale/"${i}"; done
    ```
 
 4. (Optional) Normalize the histogram of the images (original or grayscale) using [histmatch](http://www.fmwconcepts.com/imagemagick/histmatch/index.php). Change into the directory of interest (`orignal` or `grayscale`), put the `histmatch` script there, and then do the following.
    ```
-   for i in "${list}"; do ./histmatch -c gray ref.jpg "${i}" normalized/"${i}"; done
+   for i in ${list}; do ./histmatch -c gray ref.jpg "${i}" normalized/"${i}"; done
    ```
    Here, `ref.jpg` is a reference image for histogram normalization. It is usually picked from `${list}.
 
@@ -84,7 +84,7 @@ Usage:
    ```
    (Change into appropriate directory)
    list=$(find `pwd` -name '*.jpg' | sort)
-   convert -delay 10 "${list}" video.mpeg
+   convert -delay 10 ${list} video.mpeg
    ```
    Turn MPEG to MP4 using ffmpeg.
    ```
