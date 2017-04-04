@@ -1,11 +1,11 @@
 # emailimg-rpi
-A simple tool turns a Raspberry Pi (RPi) into a security monitoring system, using email as a transport layer. The script has only been tested with an outlook.com account.
+A simple tool turns a Raspberry Pi (RPi) into a security monitoring system, using email as a transport layer. The script has only been tested with an outlook.com account and a sina.com account.
 
 # What are needed
 - A Raspberry Pi (version 1-3) Model B (needs Internet connectivity)
 - A camera module (this would work: https://www.raspberrypi.org/products/camera-module/)
 - Python 2.7: smtplib, pyOpenSSL, ndg-httpsclient, pyasn1, PIL
-- An email account (a free one can be obtained from live.com)
+- An email account (a free one can be obtained from live.com or sina.com)
 
 
 ## Email a JPEG image upon motion detection
