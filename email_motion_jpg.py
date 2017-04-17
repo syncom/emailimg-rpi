@@ -26,12 +26,12 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
-# Tested for @outlook.com email
+# Tested for @outlook.com and @sina.com emails
 smtp_server = ''
 smtp_port = ''
 username = ''
 password = ''
-config_file = os.path.dirname(os.path.realpath(__file__)) + '/.config'
+config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),  '.config')
 
 def send_email_with_image(img_filepath, subject):
     [smtp_server, smtp_port, username, password] = get_config_info()
@@ -47,7 +47,7 @@ def send_email_with_image(img_filepath, subject):
     image = MIMEImage(image_data, name=os.path.basename(img_filepath))
     msg.attach(image)
 
-    s = smtplib.SMTP(smtp_server, smtp_port)
+    s = smtplib.SMTP(smtp_server, smtp_port, timeout=45)
     s.ehlo()
     s.starttls()
     s.ehlo()
@@ -168,6 +168,10 @@ def do_email_motion(dirname):
             captured1 = True
 
     while (True):
+        # Time-granule for wait in the case of error/exception
+        basic_wait = 300
+        # Double multiplicity when error/exception happens
+        mult = 1
 
         # Get comparison image
         captured2 = False
@@ -192,10 +196,15 @@ def do_email_motion(dirname):
             if fpath:
                 try:
                     do_email(fpath)
+                    # reset multiplicity
+                    mult = 1 
                 except Exception, e:
-                    print "Email might not have been sent. Encountered exception, as follows: "
-                    print e
-                    time.sleep(300) # Wait 5 minutes
+                    print("Email might not have been sent. Encountered exception, as follows: ")
+                    print(e)
+                    sleep = mult * basic_wait
+                    time.sleep(sleep) # Wait some time
+                    print("Retry after {0} seconds".format(sleep))
+                    mult = mult * 2
        
         # Swap comparison buffers
         image1 = image2
