@@ -107,8 +107,7 @@ reserve_diskspace = 40 * 1024 * 1024 # Keep 40 mb free on disk
 
 # Capture a small bitmap test image, for motion detection
 def captureTestImage():
-    command = "raspistill -n -w %s -h %s -t 1000 -e bmp -o -" 
-              % (test_width, test_height)
+    command = "raspistill -n -w %s -h %s -t 1000 -e bmp -o -" % (test_width, test_height)
     output = None
     image_data = StringIO.StringIO()
     try:
