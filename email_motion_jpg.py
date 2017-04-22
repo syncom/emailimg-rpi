@@ -22,6 +22,7 @@ import argparse
 from datetime import datetime
 from PIL import Image
 import smtplib
+import shlex
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
@@ -111,7 +112,7 @@ def captureTestImage():
     output = None
     image_data = StringIO.StringIO()
     try:
-        output = subprocess.check_output(command, shell=True)
+        output = subprocess.check_output(shlex.split(command), shell=False)
     except subprocess.CalledProcessError:
         print "Command exited with non-zero code. No output."
         return None, None
@@ -132,7 +133,7 @@ def saveImage(width, height, dirname, diskSpaceToReserve):
     filename = "motion-%04d%02d%02d-%02d%02d%02d.jpg" % (time.year, time.month, time.day, time.hour, time.minute, time.second)
     command = "raspistill -n -w %s -h %s -t 10 -e jpg -q 15 -o %s/%s" % (width, height, dirname.rstrip('/'), filename)
     try:
-        subprocess.call(command, shell=True)
+        subprocess.call(shlex.split(command), shell=False)
     except subprocess.CalledProcessError:
         print "Command exited with non-zero code. No file captured."
         return None
