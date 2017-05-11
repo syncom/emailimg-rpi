@@ -36,6 +36,21 @@ Usage:
     ```
     disable_camera_led=1
     ```
+7. (Optional) To run the program upon system boot, create a cron job:
+   ```
+   crontab -e
+   ```
+   And add the following lines (and redirect stdout and stderr output 
+   to a file)
+   ```
+   # Upon reboot
+   @reboot /home/pi/bin/emailimg-rpi/emailimg-motion-run.sh > /home/pi/bin/emailimg-rpi/emailimg.log 2>&1
+   ```
+   (For some unknown reason, although the script is running after a
+   reboot, nothing seems to be written to the log file. I'm still yet to
+   figure this out)
+
+
 ## Email a JPEG image every 10 minutes (for time-lapse photography)
 
 Usage:
@@ -106,3 +121,4 @@ Usage:
   - Server: smtp.sina.com
   - Port: 25
 
+## 
