@@ -5,10 +5,8 @@ This module emails an image file to a pre-configured address
 """
 
 import os
-import sys
 import time
 import argparse
-from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -22,6 +20,10 @@ password = ''
 config_file = os.path.dirname(os.path.realpath(__file__)) + '/.config'
 
 def send_email_with_image(img_filepath, subject):
+    """
+    This function loads email configuration from a file, and sends the
+    captured image to (and from) this email address as an attachment.
+    """
     [smtp_server, smtp_port, username, password] = get_config_info()
     from_address = username
     to_address = username
@@ -52,12 +54,12 @@ def get_config_info():
     t = c.splitlines()
     return t[0:4]
 
-def get_mtime_str(file):
+def get_mtime_str(fil):
     ''' Obtain file modification time string.
     Return str
     '''
     try:
-        mtime = os.path.getmtime(file)
+        mtime = os.path.getmtime(fil)
     except OSError:
         return ''
     is_dst = time.daylight and time.localtime().tm_isdst > 0
