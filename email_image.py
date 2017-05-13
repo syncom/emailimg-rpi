@@ -13,10 +13,6 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
 # Tested for @outlook.com and @sina.com emails
-smtp_server = ''
-smtp_port = ''
-username = ''
-password = ''
 config_file = os.path.dirname(os.path.realpath(__file__)) + '/.config'
 
 def send_email_with_image(img_filepath, subject):
